@@ -102,6 +102,7 @@ python-dateutil==3.0.0
 python-docx==1.2.0
 python-json-logger==4.2.0
 python-multipart==0.0.32
+python-pptx==1.0.2
 pywinpty==3.1.0
 PyYAML==6.0.3
 pyzmq==27.2.0
@@ -138,3 +139,4 @@ webencodings==0.6.1
 websocket-client==1.9.2
 websockets==17.3
 widgetsnbextension==4.0.16
+xlsxwriter==3.3.1

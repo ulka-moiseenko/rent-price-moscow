@@ -1,0 +1,26 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+.ck { display: flex; align-items: center; gap: 12px; border: 2px solid #2F7FBF; background: #F2F8FE; border-radius: 11px; padding: 8px 14px; font-size: 18px; line-height: 1.22; }
+.n { flex: none; width: 38px; height: 38px; border-radius: 8px; background: #17358A; color: #fff; font-weight: 800; font-size: 21px; display: flex; align-items: center; justify-content: center; }
+</style></head><body>
+<div class="row">
+  <div class="col" style="flex:.8;justify-content:center">
+    <div class="card purple"><h2>Вход</h2>Признаки квартиры и прогноз цены основной модели</div>
+    <div class="card grey"><h2>Эталоны</h2>Контрольная линейная модель, диапазоны и категории обучающих данных, похожие квартиры</div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="col" style="flex:1.7">
+    <div class="ck"><div class="n">1</div><div>Значения признаков лежат от 1-го до 99-го процентиля обучающих данных</div></div>
+    <div class="ck"><div class="n">2</div><div>Категории встречались при обучении</div></div>
+    <div class="ck"><div class="n">3</div><div>Прогноз отличается от контрольной модели не более чем на 35 процентов</div></div>
+    <div class="ck"><div class="n">4</div><div>Прогноз отличается от медианы похожих квартир не более чем на 40 процентов (те же комнаты, площадь в пределах 20 процентов, расстояние до центра в пределах 3 км, не менее 5 квартир)</div></div>
+    <div class="ck"><div class="n">5</div><div>Цена лежит в границах цен обучающих данных</div></div>
+  </div>
+  <div class="arrow">➜</div>
+  <div class="col" style="flex:.9;justify-content:center">
+    <div class="card green"><h2>Норма</h2>Все проверки пройдены. На тесте 84,7 процента прогнозов, MAPE 14,1</div>
+    <div class="card orange"><h2>Внимание</h2>Есть непройденная проверка. На тесте 15,3 процента прогнозов, MAPE 18,0</div>
+    <div class="card blue"><h2>Журнал</h2><code>logs/predictions.jsonl</code>, адрес не сохраняется</div>
+  </div>
+</div>
+</body></html>

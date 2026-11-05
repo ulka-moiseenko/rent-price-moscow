@@ -1,0 +1,20 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head><body>
+<div class="row">
+  <div class="card grey" style="flex:.8"><h2>Источник</h2>Каталог Яндекс Недвижимости<br><br>Объявления содержат персональные данные авторов</div>
+  <div class="arrow">➜</div>
+  <div class="card bronze" style="flex:1.1"><h2>Бронзовый слой</h2>
+    <ul><li>записи без персональных данных</li><li>псевдонимы адреса и номера объявления</li><li>данные не изменяются после записи</li></ul><br>
+    <code>data/bronze/*.jsonl</code><br>хранение: только локально</div>
+  <div class="arrow">➜</div>
+  <div class="card silver" style="flex:1.1"><h2>Серебряный слой</h2>
+    <ul><li>проверенные и типизированные данные</li><li>история цен и журнал загрузок</li><li>актуальные объявления в CSV</li></ul><br>
+    <code>offers, price_history, load_runs</code><br><code>data/silver/offers_silver.csv</code><br>публикация: GitHub</div>
+  <div class="arrow">➜</div>
+  <div class="card gold" style="flex:1.1"><h2>Золотой слой</h2>
+    <ul><li>только Москва, без повторов и выбросов</li><li>признаки модели, округ</li><li>логарифм цены и ценовой класс</li></ul><br>
+    <code>offers_model</code><br><code>data/gold/offers_gold.csv</code><br>публикация: GitHub</div>
+</div>
+<div class="row" style="margin-top:14px">
+  <div class="card orange" style="flex:1;text-align:center"><b>Контроль на границах слоёв:</b> удаление персональных данных при записи в бронзовый слой, проверка качества перед серебряным, правила очистки и разделение выборок перед золотым</div>
+</div>
+</body></html>

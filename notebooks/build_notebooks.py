@@ -31,7 +31,10 @@ from db import connect
 pd.set_option("display.width", 130, "display.max_columns", 30, "display.max_rows", 60)
 FIG = ROOT / "reports" / "figures"
 FIG.mkdir(parents=True, exist_ok=True)
+from matplotlib.ticker import FuncFormatter, NullFormatter
+
 NAVY, BLUE, YELLOW, GREY = "#17358A", "#2F6FD0", "#F2C230", "#8A94A6"
+COMMA = FuncFormatter(lambda v, _: f"{v:g}".replace(".", ","))
 plt.rcParams.update({"font.family": "Times New Roman", "font.size": 12, "axes.spines.top": False,
                      "axes.spines.right": False, "figure.facecolor": "white", "savefig.dpi": 200,
                      "savefig.bbox": "tight"})
@@ -125,7 +128,7 @@ for i in range(len(cols)):
     for j in range(len(cols)):
         ax.text(j, i, f"{corr.iloc[i, j]:.2f}".replace(".", ","), ha="center", va="center", fontsize=9,
                 color="white" if abs(corr.iloc[i, j]) > .6 else "black")
-fig.colorbar(im, shrink=.8, label="Коэффициент Спирмена")
+fig.colorbar(im, shrink=.8, label="Коэффициент Спирмена", format=COMMA)
 fig.savefig(FIG / "correlation.png")'''),
     ("code", "groups", '''\
 # Медианная цена по группам
@@ -208,6 +211,34 @@ fig.savefig(FIG / "confusion_matrix.png")'''),
 print({k: round(v, 1) for k, v in m["best_details"].items() if isinstance(v, float)})
 print("MAPE по классам:", {k: round(v, 1) for k, v in m["best_details"]["by_class_mape"].items()})
 print("Самопроверка на тесте:", m.get("self_check_on_test"))'''),
+    ("code", "feature_sets", '''\
+# Влияют ли дополнительные поля на качество: перекрёстная проверка бустинга с параметрами выбранной модели
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import GroupKFold, cross_val_score
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from preprocess import CATEGORICAL, NUMERIC
+
+silver = pd.read_csv(ROOT / "data" / "silver" / "offers_silver.csv", encoding="utf-8-sig", low_memory=False).set_index("offer_key")
+data = gold[gold.split == "train"].join(silver[["area_kitchen", "area_living", "ceiling_height"]], on="offer_key")
+print("Заполнено:", data[["area_kitchen", "area_living", "ceiling_height"]].notna().mean().round(2).to_dict())
+
+
+def score(extra):
+    numeric = NUMERIC + extra
+    prep = ColumnTransformer([("num", Pipeline([("impute", SimpleImputer(strategy="median")), ("scale", StandardScaler())]), numeric),
+                              ("cat", OneHotEncoder(handle_unknown="ignore"), CATEGORICAL)])
+    model = GradientBoostingRegressor(n_estimators=600, learning_rate=0.05, max_depth=3, subsample=0.8, random_state=42)
+    values = -cross_val_score(Pipeline([("prep", prep), ("model", model)]), data[numeric + CATEGORICAL], data.log_price,
+                              groups=data.building_key, cv=GroupKFold(5), scoring="neg_mean_absolute_error", n_jobs=-1)
+    return round(values.mean(), 4)
+
+
+for name, extra in [("выбранные признаки", []), ("и площадь кухни", ["area_kitchen"]), ("и жилая площадь", ["area_living"]),
+                    ("и высота потолков", ["ceiling_height"])]:
+    print(f"{name:22} MAE логарифма {score(extra)}")'''),
     ("code", "fig_pred", '''\
 # Прогноз и факт на тестовой выборке
 pred = np.exp(model.predict(test[m["features"]]))
@@ -217,6 +248,7 @@ lim = [20, 500]
 ax.plot(lim, lim, "--", color=NAVY, label="идеальный прогноз")
 ax.set(xscale="log", yscale="log", xlim=lim, ylim=lim, xlabel="Фактическая цена, тыс. руб. в месяц", ylabel="Прогноз, тыс. руб. в месяц")
 ax.set_xticks([25, 50, 100, 200, 400], ["25", "50", "100", "200", "400"]); ax.set_yticks([25, 50, 100, 200, 400], ["25", "50", "100", "200", "400"])
+ax.xaxis.set_minor_formatter(NullFormatter()); ax.yaxis.set_minor_formatter(NullFormatter())
 ax.legend(frameon=False)
 fig.savefig(FIG / "pred_vs_true.png")'''),
     ("code", "fig_importance", '''\
@@ -230,6 +262,7 @@ print(imp.round(4).to_string())
 fig, ax = plt.subplots(figsize=(8, 4.2))
 ax.barh([names[k] for k in imp.index[::-1]], imp.values[::-1], color=BLUE)
 ax.set(xlabel="Рост MAE логарифма цены при перемешивании признака")
+ax.xaxis.set_major_formatter(COMMA)
 fig.savefig(FIG / "importance.png")'''),
     ("code", "fig_models", '''\
 # Сравнение моделей
@@ -238,7 +271,8 @@ items = [k for k in m["results"] if not k.startswith("Базовая")]
 x = np.arange(len(items))
 ax.bar(x - .2, [m["results"][k]["train"]["MAPE"] for k in items], .4, label="обучающая выборка", color=YELLOW)
 ax.bar(x + .2, [m["results"][k]["test"]["MAPE"] for k in items], .4, label="тестовая выборка", color=BLUE)
-ax.set_xticks(x, items); ax.set_ylabel("MAPE, процентов"); ax.legend(frameon=False)
+ax.set_xticks(x, items); ax.set_ylabel("MAPE, процентов"); ax.set_ylim(0, 21); ax.legend(frameon=False, ncol=2, loc="upper center")
+ax.yaxis.set_major_formatter(COMMA)
 fig.savefig(FIG / "models_mape.png")'''),
     ("code", "examples", '''\
 # Примеры прогнозов с самопроверкой (журнал прогнозов в блокноте не пополняется)

@@ -1,0 +1,22 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1500px; background: #fff; font-family: "Segoe UI", Arial, sans-serif; color: #16284F; padding: 24px; }
+h2 { font-size: 24px; font-weight: 800; }
+.row { display: flex; gap: 16px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.card { border: 2px solid; border-radius: 14px; padding: 12px 16px; font-size: 19px; line-height: 1.26; font-weight: 500; }
+.card h2 { margin-bottom: 7px; }
+.card ul { list-style: none; }
+.card li { padding-left: 16px; position: relative; }
+.card li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 2px; background: currentColor; opacity: .55; }
+.blue { border-color: #2F7FBF; background: #F2F8FE; } .blue h2 { color: #17358A; }
+.green { border-color: #4C9F45; background: #F3FAF1; } .green h2 { color: #2C6E27; }
+.orange { border-color: #E8912D; background: #FFF8EF; } .orange h2 { color: #B5650F; }
+.purple { border-color: #8A63C7; background: #F8F5FD; } .purple h2 { color: #5C3A99; }
+.navy { border-color: #17358A; background: #17358A; color: #fff; } .navy h2 { color: #fff; }
+.grey { border-color: #8A94A6; background: #F4F5F7; } .grey h2 { color: #3D4657; }
+.bronze { border-color: #B5763A; background: #FBF3EA; } .bronze h2 { color: #8A5420; }
+.silver { border-color: #7F8A99; background: #F2F4F7; } .silver h2 { color: #4A5566; }
+.gold { border-color: #D9A916; background: #FFFBE8; } .gold h2 { color: #96740A; }
+.arrow { flex: none; display: flex; align-items: center; justify-content: center; color: #2F7FBF; font-size: 34px; font-weight: 800; }
+.note { font-size: 16px; font-weight: 600; color: #17358A; text-align: center; }
+code { font-family: Consolas, monospace; font-size: .93em; }

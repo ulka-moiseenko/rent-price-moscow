@@ -1,0 +1,35 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+.t { border: 2px solid #17358A; border-radius: 10px; overflow: hidden; font-size: 17px; background: #fff; flex: 1; }
+.t h3 { background: #17358A; color: #fff; font-size: 19px; padding: 7px 12px; }
+.t.g h3 { background: #D9A916; color: #2B2300; } .t.g { border-color: #D9A916; }
+.t.s h3 { background: #4C9F45; } .t.s { border-color: #4C9F45; }
+.t div { display: flex; justify-content: space-between; padding: 3px 12px; border-top: 1px solid #E3E8F0; }
+.t i { font-style: normal; color: #5C6B85; font-size: 15px; }
+.pk { color: #B5650F; font-weight: 700; } .fk { color: #2F7FBF; font-weight: 700; }
+.link { flex: none; width: 74px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #17358A; font-weight: 700; font-size: 15px; }
+.link span { font-size: 28px; color: #2F7FBF; }
+</style></head><body>
+<div class="row" style="gap:0">
+  <div class="t"><h3>load_runs: журнал загрузок</h3>
+    <div><b class="pk">run_id (ПК)</b><i>SERIAL</i></div><div>source<i>TEXT</i></div><div>file_name (уникальное)<i>TEXT</i></div>
+    <div>collected_at<i>TIMESTAMP</i></div><div>loaded_at<i>TIMESTAMP</i></div><div>offers_count<i>INTEGER</i></div><div>new_offers<i>INTEGER</i></div><div>price_changes<i>INTEGER</i></div></div>
+  <div class="link">1 : N<span>➜</span></div>
+  <div class="t" style="flex:1.2"><h3>offers: объявления</h3>
+    <div><b class="pk">offer_key (ПК)</b><i>TEXT</i></div><div>building_key<i>TEXT</i></div><div>in_moscow<i>BOOLEAN</i></div>
+    <div>rooms, floor, floors_total<i>SMALLINT</i></div><div>area_total, area_kitchen<i>NUMERIC</i></div><div>renovation, building_type<i>TEXT</i></div>
+    <div>built_year<i>SMALLINT</i></div><div>latitude, longitude<i>DOUBLE</i></div><div>dist_center_km<i>NUMERIC</i></div><div>metro, metro_minutes<i>TEXT, SMALLINT</i></div>
+    <div><b class="fk">first_seen_run, last_seen_run (ВК)</b><i>INTEGER</i></div><div>is_active<i>BOOLEAN</i></div></div>
+  <div class="link">1 : N<span>➜</span></div>
+  <div class="t"><h3>price_history: история цен</h3>
+    <div><b class="pk">offer_key (ПК, ВК)</b><i>TEXT</i></div><div><b class="pk">run_id (ПК, ВК)</b><i>INTEGER</i></div><div>price (больше 0)<i>INTEGER</i></div>
+    <div>agent_fee<i>NUMERIC</i></div><div>utilities_included<i>BOOLEAN</i></div><div>updated_on_site<i>TIMESTAMPTZ</i></div></div>
+</div>
+<div class="row" style="margin-top:16px">
+  <div class="t g"><h3>offers_model: золотой слой</h3><div><b class="fk">offer_key (ПК, ВК)</b><i>TEXT</i></div><div>признаки модели, округ<i>13 столбцов</i></div><div>price, log_price, price_class<i>цели</i></div><div>split<i>train, test</i></div></div>
+  <div class="t s"><h3>quality_checks: проверки качества</h3><div>source, check_name<i>TEXT</i></div><div>value, threshold<i>DOUBLE</i></div><div>status<i>норма, внимание, ошибка</i></div></div>
+  <div class="t s"><h3>pipeline_runs: запуски конвейера</h3><div>started_at, finished_at<i>TIMESTAMP</i></div><div>status<i>TEXT</i></div><div>details<i>TEXT</i></div></div>
+  <div class="t s"><h3>model_runs: качество моделей</h3><div>model, is_best<i>TEXT, BOOLEAN</i></div><div>mae, rmse, mape, r2<i>DOUBLE</i></div><div>class_accuracy, class_f1<i>DOUBLE</i></div></div>
+</div>
+<div class="note" style="margin-top:12px">Представление v_offers_current соединяет offers и price_history и возвращает активные объявления с ценой из последнего сбора. Роль rent_reader имеет право только на чтение.</div>
+</body></html>

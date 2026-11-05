@@ -260,7 +260,7 @@ class VkrDocument:
                 w.paragraph_format.first_line_indent = Cm(0)
                 w.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.LEFT
                 end = "." if i == len(where) - 1 else ";"
-                _set_font(w.add_run(("где " if i == 0 else "") + line.rstrip(".") + end))
+                _set_font(w.add_run(("где " if i == 0 else "") + (line.rstrip(".") if i == len(where) - 1 else line) + end))
         self.doc.add_paragraph()
         return self.formula_no
 

@@ -1,0 +1,21 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head><body style="width:1200px">
+<svg viewBox="0 0 1150 500" width="1150" height="500" font-family="Segoe UI, Arial" fill="#16284F">
+<style>.l{stroke:#AFC6E4;stroke-width:1} .t{text-anchor:middle;font-size:21px;font-weight:700} .s{text-anchor:middle;font-size:17px}</style>
+<g id="links"></g><g id="nodes"></g>
+<text class="t" x="115" y="35" fill="#17358A">Входной слой</text><text class="s" x="115" y="60">21 значение (9 числовых признаков и категории в one-hot; округ расширяет число столбцов)</text>
+</svg>
+<script>
+const layers=[{x:115,n:7,c:'#2F7FBF',t:'Входной слой',d:'нормализованные признаки'},{x:425,n:9,c:'#4C9F45',t:'Скрытый слой 1',d:'128 нейронов, ReLU'},{x:735,n:6,c:'#E8912D',t:'Скрытый слой 2',d:'64 нейрона, ReLU'},{x:1035,n:1,c:'#17358A',t:'Выходной слой',d:'логарифм цены'}];
+const svg=document.querySelector('svg');svg.querySelectorAll('text').forEach(e=>e.remove());
+const NS='http://www.w3.org/2000/svg',links=document.getElementById('links'),nodes=document.getElementById('nodes');
+const pos=l=>Array.from({length:l.n},(_,i)=>({x:l.x,y:270+(i-(l.n-1)/2)*38}));
+layers.forEach((l,k)=>{const p=pos(l);
+ if(k<layers.length-1)p.forEach(a=>pos(layers[k+1]).forEach(b=>{const e=document.createElementNS(NS,'line');e.setAttribute('class','l');e.setAttribute('x1',a.x);e.setAttribute('y1',a.y);e.setAttribute('x2',b.x);e.setAttribute('y2',b.y);links.appendChild(e);}));
+ p.forEach(a=>{const c=document.createElementNS(NS,'circle');c.setAttribute('cx',a.x);c.setAttribute('cy',a.y);c.setAttribute('r',14);c.setAttribute('fill',l.c);nodes.appendChild(c);});
+ [[l.t,'t',34],[l.d,'s',62]].forEach(([s,cl,y])=>{const t=document.createElementNS(NS,'text');t.setAttribute('class',cl);t.setAttribute('x',l.x);t.setAttribute('y',y);t.setAttribute('fill',cl=='t'?l.c:'#16284F');t.textContent=s;svg.appendChild(t);});});
+</script>
+<div class="row" style="margin-top:6px;font-size:18px">
+  <div class="card blue" style="flex:1;font-size:17px"><b>Обучение:</b> минимизация квадратичной ошибки по логарифму цены, целевая переменная нормализована</div>
+  <div class="card orange" style="flex:1;font-size:17px"><b>Защита от переобучения:</b> ранняя остановка и L2-регуляризация с коэффициентом 1,0</div>
+</div>
+</body></html>

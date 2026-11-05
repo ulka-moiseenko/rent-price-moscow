@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1500px; background: #fff; font-family: "Segoe UI", Arial, sans-serif; color: #16284F; padding: 26px; }
+  .goal { display: flex; align-items: center; border: 2px solid #9CC4E8; border-radius: 16px; background: linear-gradient(90deg, #E6F1FB, #F7FBFF); padding: 14px 24px; }
+  .goal h1 { font-size: 38px; font-weight: 800; color: #17358A; white-space: nowrap; padding-right: 34px; border-right: 4px solid #2F7FBF; margin-right: 28px; }
+  .goal p { font-size: 24px; font-weight: 600; line-height: 1.28; }
+  .band { text-align: center; font-size: 28px; font-weight: 800; color: #17358A; margin: 16px 0 12px; }
+  .band span { background: #DCEBFA; padding: 5px 44px; border-radius: 8px; }
+  .row { display: flex; gap: 16px; margin-bottom: 14px; }
+  .task { flex: 1; display: flex; gap: 14px; border-radius: 14px; padding: 13px 16px; font-size: 20.5px; font-weight: 600; line-height: 1.27; border: 2px solid; }
+  .num { flex: none; width: 54px; height: 62px; border-radius: 8px; color: #fff; font-size: 38px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+  .t1 { border-color: #9CC4E8; background: #F2F8FE; } .t1 .num { background: #2F7FBF; }
+  .t2 { border-color: #A9D5A0; background: #F3FAF1; } .t2 .num { background: #4C9F45; }
+  .t3 { border-color: #F2C48D; background: #FFF8EF; } .t3 .num { background: #E8912D; }
+  .box { flex: 1; border-radius: 14px; border: 2px solid; padding: 11px 18px 14px; }
+  .box h2 { font-size: 27px; font-weight: 800; margin-bottom: 8px; }
+  .box p { font-size: 20px; line-height: 1.28; border-left: 5px solid; padding-left: 14px; font-weight: 500; }
+  .obj { border-color: #C6B6E6; background: #F8F5FD; } .obj p { border-color: #8A63C7; }
+  .sub { border-color: #A9D5A0; background: #F5FBF3; } .sub p { border-color: #4C9F45; }
+  .base { border-color: #F2C48D; background: #FFF8EF; } .base p { border-color: #E8912D; }
+  .sls { flex: 1; border-radius: 14px; border: 2px solid #9CC4E8; background: #F2F8FE; padding: 11px 16px 14px; }
+  .sls h2 { font-size: 27px; font-weight: 800; margin-bottom: 10px; }
+  .chain { display: flex; align-items: stretch; gap: 0; }
+  .step { flex: 1; background: #fff; border: 2px solid #2F7FBF; border-radius: 9px; padding: 7px 5px; text-align: center; font-size: 15.5px; font-weight: 600; line-height: 1.2; display: flex; align-items: center; justify-content: center; }
+  .step.end { background: #17358A; color: #fff; border-color: #17358A; }
+  .arrow { flex: none; width: 19px; display: flex; align-items: center; justify-content: center; color: #2F7FBF; font-size: 19px; font-weight: 800; }
+  .links { display: flex; gap: 8px; margin-top: 9px; font-size: 15.5px; font-weight: 600; text-align: center; }
+  .links div { flex: 1; background: #DCEBFA; border-radius: 7px; padding: 5px 4px; color: #17358A; }
+</style></head>
+<body>
+  <div class="goal"><h1>Цель работы</h1>
+    <p>Проектирование и программно-инженерная реализация информационной системы определения стоимости арендной платы и ценового класса квартиры на базе многоуровневого конвейера данных</p></div>
+  <div class="band"><span>Основные инженерные задачи</span></div>
+  <div class="row">
+    <div class="task t1"><div class="num">1</div><div>Анализ предметной области, сравнение источников данных и проектирование хранилища на базе медальонной архитектуры и реляционной СУБД</div></div>
+    <div class="task t2"><div class="num">2</div><div>Разработка контуров автоматизированного сбора, валидации, дедупликации, нормализации и геокодирования данных с исключением персональных сведений</div></div>
+    <div class="task t3"><div class="num">3</div><div>Обучение и сравнение моделей машинного обучения, реализация сервиса прогноза с контролем качества, мониторингом, логированием и защитой информации</div></div>
+  </div>
+  <div class="row">
+    <div class="box obj"><h2>Объект исследования</h2><p>Сквозной процесс сбора, хранения, преобразования и аналитической интерпретации данных о предложениях долгосрочной аренды квартир в Москве</p></div>
+    <div class="box sub"><h2>Предмет исследования</h2><p>Архитектура конвейера данных, методы валидации и дедупликации, модели машинного обучения, зависимость цены и ценового класса от характеристик квартиры, дома и расположения</p></div>
+  </div>
+  <div class="row">
+    <div class="box base"><h2>Теоретико-методологическая база</h2><p>Математическая статистика, реляционная модель данных, методы машинного обучения (регрессия, ансамбли деревьев, нейронные сети), пространственный анализ и модульное объектно-ориентированное программирование</p></div>
+    <div class="sls"><h2>Структурно-логическая схема</h2>
+      <div class="chain">
+        <div class="step">Проблема: устаревание оценок рынка</div><div class="arrow">➜</div>
+        <div class="step">Живые данные и анализ</div><div class="arrow">➜</div>
+        <div class="step">Конвейер и слои данных</div><div class="arrow">➜</div>
+        <div class="step">Модели и выбор решения</div><div class="arrow">➜</div>
+        <div class="step end">Цена и ценовой класс</div>
+      </div>
+      <div class="links"><div>Глава 1: теория и архитектура</div><div>Глава 2: реализация и результаты</div></div>
+    </div>
+  </div>
+</body></html>

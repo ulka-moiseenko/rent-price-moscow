@@ -1,0 +1,29 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+.c { flex: 1; border: 3px solid; border-radius: 12px; padding: 9px 12px; background: #fff; box-shadow: 5px 5px 0 #FFE27A; }
+.c small { display: block; font-size: 13px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.c b { display: block; font: 700 21px Consolas, monospace; border-bottom: 2px solid #17358A; margin: 3px 0 5px; padding-bottom: 3px; color: #17358A; }
+.c p { font-size: 16.5px; line-height: 1.24; }
+.down { text-align: center; color: #2F7FBF; font-size: 26px; font-weight: 800; line-height: 1.1; margin: 4px 0; }
+.bl { border-color: #2F7FBF; } .gr { border-color: #4C9F45; } .pu { border-color: #8A63C7; } .or { border-color: #E8912D; } .na { border-color: #17358A; }
+</style></head><body>
+<div class="row"><div class="c na" style="flex:1"><small>Управление</small><b>PipelineRunner</b><p>Запускает этапы по порядку, останавливает конвейер при ошибке, ведёт журнал запусков, принимает или отклоняет новую модель</p></div></div>
+<div class="down">▼</div>
+<div class="row">
+  <div class="c or"><small>Защита</small><b>PersonalDataGuard</b><p>Белый список полей, псевдонимы HMAC-SHA256, округление координат, поиск персональных данных</p></div>
+  <div class="c bl"><small>Сбор</small><b>YandexCollector</b><p>Обход сегментов, запись в бронзовый слой, остановка при блокировке</p></div>
+  <div class="c or"><small>Качество</small><b>QualityGate</b><p>Схема Pydantic, повторы, объём, свежесть, дрейф PSI, таблица проверок</p></div>
+</div>
+<div class="down">▼</div>
+<div class="row">
+  <div class="c gr"><small>Хранение</small><b>DataLakeManager</b><p>Загрузка бронзы в серебряный слой, транзакции, история цен, выгрузка CSV</p></div>
+  <div class="c gr"><small>Подготовка</small><b>DataPreprocessor</b><p>Очистка, разделение по домам, логарифм цены, ценовые классы, золотой слой</p></div>
+  <div class="c gr"><small>Обучение</small><b>ModelTrainer</b><p>Перекрёстная проверка, подбор параметров, метрики, сохранение лучшей модели</p></div>
+</div>
+<div class="down">▼</div>
+<div class="row">
+  <div class="c pu"><small>Расположение</small><b>LocationResolver</b><p>Адрес, станция, округ или удалённость переводятся в координаты и признаки</p></div>
+  <div class="c pu"><small>Прогноз</small><b>RentPredictor</b><p>Проверка ввода, прогноз цены и ценового класса, передача на самопроверку</p></div>
+  <div class="c pu"><small>Мониторинг</small><b>PredictionMonitor</b><p>Самопроверка результата, статус норма или внимание, журнал прогнозов</p></div>
+</div>
+</body></html>
